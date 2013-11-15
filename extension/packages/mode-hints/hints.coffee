@@ -73,8 +73,9 @@ createMarkers = (document) ->
       # Note that the markers are not given hints.
       set = utils.getMarkableElements(document, {type: 'all'})
       markers = []
+      visibleOnly = not getPref('hints_static_on')
       for element in set
-        if rect = getElementRect(element)
+        if rect = getElementRect(element, visibleOnly)
           marker = new Marker(element)
           marker.setPosition(rect.top, rect.left)
           marker.weight = rect.area * marker.calcBloomRating()
@@ -96,7 +97,7 @@ createHintsContainer = (document) ->
 # the children of the markable node.
 #
 # The logic has been copied over from Vimiun originally.
-getElementRect = (element) ->
+getElementRect = (element, visibleOnly) ->
   document = element.ownerDocument
   window   = document.defaultView
   docElem  = document.documentElement
@@ -111,7 +112,7 @@ getElementRect = (element) ->
 
   clientRect = element.getBoundingClientRect()
 
-  if isRectOk(clientRect, window)
+  if isRectOk(clientRect, window, visibleOnly)
     return {
       top:    clientRect.top  + scrollTop  - clientTop
       left:   clientRect.left + scrollLeft - clientLeft
@@ -128,20 +129,20 @@ getElementRect = (element) ->
         if computedStyle.getPropertyValue('float') != 'none' or \
            computedStyle.getPropertyValue('position') == 'absolute'
 
-          return getElementRect(childElement)
+          return getElementRect(childElement, visibleOnly)
 
   return
 
 
 # Checks if the given TextRectangle object qualifies
 # for its own Marker with respect to the `window` object
-isRectOk = (rect, window) ->
+isRectOk = (rect, window, visibleOnly) ->
   minimum = 2
   rect.width >  minimum and rect.height >  minimum and \
-  rect.top   > -minimum and rect.left   > -minimum and \
+  (not visibleOnly or \
+  (rect.top   > -minimum and rect.left   > -minimum and \
   rect.top   <  window.innerHeight - minimum and \
-  rect.left  <  window.innerWidth  - minimum
-
+  rect.left  <  window.innerWidth  - minimum ))
 
 
 # Finds all stacks of markers that overlap each other (by using `getStackFor`) (#1), and rotates

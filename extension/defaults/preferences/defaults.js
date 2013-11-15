@@ -6,3 +6,4 @@ pref('extensions.VimFx.black_list',         '*example.com*');
 pref('extensions.VimFx.hints_bloom_data',   '');
 pref('extensions.VimFx.prevent_autofocus',  true);
 pref('extensions.VimFx.hints_bloom_on',     true);
+pref('extensions.VimFx.hints_static_on',    false);

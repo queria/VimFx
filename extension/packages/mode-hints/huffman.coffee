@@ -4,6 +4,8 @@
 # the element should not get a code word at all. The code words will use the `alphabet` provided.
 # The functions runs `callback(element, codeWord)` for each object in `originalElements` and returns
 # `undefined`.
+{ getPref }               = require 'prefs'
+
 exports.addHuffmanCodeWordsTo = (originalElements, {alphabet}, callback) ->
   unless typeof(alphabet) == 'string'
     throw new TypeError('`alphabet` must be provided and be a string.')
@@ -48,7 +50,8 @@ exports.addHuffmanCodeWordsTo = (originalElements, {alphabet}, callback) ->
 
   # Sort the elements after their weights, in descending order, so that the last ones will be the
   # ones with lowest weight.
-  elements.sort((a, b) -> b.weight - a.weight)
+  if not getPref('hints_static_on') or getPref('hints_bloom_on')
+    elements.sort((a, b) -> b.weight - a.weight)
 
   # Pad with zero-weights to be able to form a `numBranches`-ary tree.
   for i in [0...padding] by 1

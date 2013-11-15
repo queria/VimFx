@@ -19,6 +19,8 @@ Wildcards allowed: *, !. Example: *example.com*,*foobar.org*">
 
 <!ENTITY pref.prevent_autofocus.title "Prevent auto focusing inputs">
 <!ENTITY pref.prevent_autofocus.desc  "Inputs will not be focused when the page loads">
+<!ENTITY pref.hints_static_on.title "Static hint assignment">
+<!ENTITY pref.hints_static_on.desc  "Assign hints to all elements in page, always in same order, as they appear on page or based on your usage (when smart-hint enabled).">
 
 <!ENTITY customizeButton.title "Keyboard Shortcuts">
 <!ENTITY customizeButton.label "Customize">

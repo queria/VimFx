@@ -17,6 +17,8 @@
         title="&pref.hints_bloom_on.title;" desc="&pref.hints_bloom_on.desc;" />
     <setting pref="extensions.VimFx.prevent_autofocus" type="bool"
         title="&pref.prevent_autofocus.title;" desc="&pref.prevent_autofocus.desc;" />
+    <setting pref="extensions.VimFx.hints_static_on" type="bool"
+        title="&pref.hints_static_on.title;" desc="&pref.hints_static_on.desc;" />
     <setting title="&customizeButton.title;" type="control">
         <button id="customizeButton" label="&customizeButton.label;" />
     </setting>
