@@ -19,8 +19,8 @@ removeHints = (document) ->
     removeHints(frame.document)
 
 
-injectHints = (document) ->
-  markers = createMarkers(document)
+injectHints = (document, elements_type) ->
+  markers = createMarkers(document, elements_type)
   hintChars = utils.getHintChars()
 
   # Each marker gets a unique `z-index`, so that it can be determined if a marker overlaps another.
@@ -64,14 +64,16 @@ insertHints = (markers) ->
     doc.documentElement.appendChild(container)
 
 
-createMarkers = (document) ->
+createMarkers = (document, elements_type) ->
+  if not elements_type?
+    elements_type = 'all'
   # For now we aren't able to handle hint markers in XUL Documents :(
   if document instanceof HTMLDocument # or document instanceof XULDocument
     if document.documentElement
       # Select all markable elements in the document, create markers
       # for each of them, and position them on the page.
       # Note that the markers are not given hints.
-      set = utils.getMarkableElements(document, {type: 'all'})
+      set = utils.getMarkableElements(document, {type: elements_type})
       markers = []
       visibleOnly = not getPref('hints_static_on')
       for element in set

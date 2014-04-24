@@ -4,8 +4,8 @@ hints = require 'mode-hints/hints'
 { isEscCommandKey } = require 'commands'
 
 exports.mode_hints =
-  onEnter: (vim, storage, callback) ->
-    markers = hints.injectHints(vim.window.document)
+  onEnter: (vim, storage, callback, elements_type) ->
+    markers = hints.injectHints(vim.window.document, elements_type)
     if markers?.length > 0
       storage.markers  = markers
       storage.callback = callback
